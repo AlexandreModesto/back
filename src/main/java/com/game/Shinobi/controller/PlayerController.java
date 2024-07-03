@@ -20,7 +20,11 @@ public class PlayerController {
     @GetMapping(value = "/info/{id}")
     public ResponseEntity<?> info(@PathVariable(value = "id")Long id){
         Player player = service.playerInfo(id);
-        return ResponseEntity.ok(player);
+        if (player != null){
+            return ResponseEntity.ok(player);}
+        else{
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping(value = "/new")
