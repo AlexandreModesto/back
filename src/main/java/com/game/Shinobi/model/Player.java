@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -22,6 +24,9 @@ public class Player {
     @Column
     private Integer playerLevel;
 
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    private List<Mob> army ;
+
     @Column
     private Long UserId;
 
@@ -30,5 +35,6 @@ public class Player {
         this.playerName=playerName;
         this.playerLevel=1;
         this.UserId=userId;
+
     }
 }

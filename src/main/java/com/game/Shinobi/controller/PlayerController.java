@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/player")
@@ -19,11 +20,12 @@ public class PlayerController {
 
     @GetMapping(value = "/info/{id}")
     public ResponseEntity<?> info(@PathVariable(value = "id")Long id){
-        Player player = service.playerInfo(id);
-        if (player != null){
-            return ResponseEntity.ok(player);}
+        Optional<Player> player = service.playerInfo(id);
+
+        if (player.isEmpty()){
+            return ResponseEntity.badRequest().build();}
         else{
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.ok(player);
         }
     }
 
