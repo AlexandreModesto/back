@@ -20,12 +20,12 @@ public class PlayerController {
 
     @GetMapping(value = "/info/{id}")
     public ResponseEntity<?> info(@PathVariable(value = "id")Long id){
-        Optional<Player> player = service.playerInfo(id);
+        Player player = service.playerInfo(id);
 
-        if (player.isEmpty()){
-            return ResponseEntity.badRequest().build();}
-        else{
+        if (player!=null) {
             return ResponseEntity.ok(player);
+        }else{
+                return ResponseEntity.notFound().build();
         }
     }
 
@@ -37,7 +37,7 @@ public class PlayerController {
         }else
         {
             Player newPlayer = new Player(data.playerName(),data.userId());
-            service.registerPlayer(newPlayer);
+            service.register(newPlayer);
 
             return ResponseEntity.status(HttpStatus.OK).body(newPlayer.getId());
         }

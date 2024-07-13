@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Objects;
 import java.util.Random;
 
 @Entity
@@ -12,7 +14,7 @@ import java.util.Random;
 @Data
 public class Mob {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
@@ -64,7 +66,36 @@ public class Mob {
         this.type=type;
 
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Mob mob = (Mob) o;
+        return Objects.equals(id, mob.id) && Objects.equals(name, mob.name) && Objects.equals(level, mob.level) && Objects.equals(health, mob.health)&& Objects.equals(vigor, mob.vigor)&& Objects.equals(focus, mob.focus)&& Objects.equals(cursedEnergy, mob.cursedEnergy)&& Objects.equals(experience, mob.experience)&& Objects.equals(type, mob.type)&& Objects.equals(player, mob.player)&& Objects.equals(nickname, mob.nickname)&& Objects.equals(family, mob.family)&& Objects.equals(title, mob.title);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, level,health,vigor,focus,cursedEnergy,experience,type,nickname,family,title);
+    }
+
+    @Override
+    public String toString(){
+        return "Mob{"+
+                "name=" + name  +
+                ", type="+type+
+                ", nickname="+nickname+
+                ", family="+family+
+                ", title="+title+
+                ", level="+level+
+                ", health="+health+
+                ", vigor="+vigor+
+                ", focus="+focus+
+                ", cursedEnergy="+cursedEnergy+
+                ", experience="+experience+
+                ", player_id="+player.getId()+
+        "}";
+    }
 
     public void levelUp(){
         this.level++;

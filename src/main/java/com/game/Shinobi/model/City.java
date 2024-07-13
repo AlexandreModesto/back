@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class City {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

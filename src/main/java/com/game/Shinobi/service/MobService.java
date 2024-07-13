@@ -14,8 +14,8 @@ public class MobService {
     @Autowired
     public MobRepository repository;
 
-    public Optional<Mob> mobInfo(Long id){
-        return repository.findById(id);
+    public Mob mobInfo(Long id){
+        return repository.findById(id).orElse(null);
     }
 
     public List<Mob> getArmy(){
