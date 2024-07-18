@@ -30,6 +30,8 @@ public class MobReturn {
 
     private int experience;
 
+    private int xpToUp;
+
     public MobReturn(Mob mob){
         this.type = mob.getType();
         this.name= mob.getName();
@@ -42,5 +44,8 @@ public class MobReturn {
         this.focus= mob.getFocus();
         this.cursedEnergy=mob.getCursedEnergy();
         this.experience= mob.getExperience();
+        this.xpToUp= mob.getXpToUp();
     }
+
+
 }

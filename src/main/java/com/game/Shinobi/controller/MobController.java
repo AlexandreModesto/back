@@ -61,4 +61,18 @@ public class MobController {
             return ResponseEntity.notFound().build();
         }else return ResponseEntity.ok(army);
     }
+
+    @PutMapping(value="/{id}/levelup/")
+    public ResponseEntity<MobReturn> levelUp(@PathVariable Long id){
+        Mob mob = mobService.mobInfo(id);
+
+        if(mob == null){
+            return ResponseEntity.notFound().build();
+        }else {
+            mob.levelUp();
+            mobService.register(mob);
+            MobReturn mobReturn=new MobReturn(mob);
+            return ResponseEntity.ok(mobReturn);
+        }
+    }
 }

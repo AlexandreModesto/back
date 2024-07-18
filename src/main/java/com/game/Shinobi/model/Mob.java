@@ -54,6 +54,10 @@ public class Mob {
     @Column
     private int experience;
 
+    @Column(columnDefinition = "INT DEFAULT 0")
+    private int xpToUp;
+
+
     public Mob(MobType type){
         Random random = new Random();
         this.name = "Mob Teste "+random.nextInt(10)+1;
@@ -64,6 +68,7 @@ public class Mob {
         this.cursedEnergy=random.nextInt(10) + 1;
         this.experience=0;
         this.type=type;
+        this.xpToUp=150;
 
     }
     @Override
@@ -71,12 +76,25 @@ public class Mob {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Mob mob = (Mob) o;
-        return Objects.equals(id, mob.id) && Objects.equals(name, mob.name) && Objects.equals(level, mob.level) && Objects.equals(health, mob.health)&& Objects.equals(vigor, mob.vigor)&& Objects.equals(focus, mob.focus)&& Objects.equals(cursedEnergy, mob.cursedEnergy)&& Objects.equals(experience, mob.experience)&& Objects.equals(type, mob.type)&& Objects.equals(player, mob.player)&& Objects.equals(nickname, mob.nickname)&& Objects.equals(family, mob.family)&& Objects.equals(title, mob.title);
+        return Objects.equals(id, mob.id) &&
+                Objects.equals(name, mob.name) &&
+                Objects.equals(level, mob.level) &&
+                Objects.equals(health, mob.health)&&
+                Objects.equals(vigor, mob.vigor)&&
+                Objects.equals(focus, mob.focus)&&
+                Objects.equals(cursedEnergy, mob.cursedEnergy)&&
+                Objects.equals(experience, mob.experience)&&
+                Objects.equals(type, mob.type)&&
+                Objects.equals(player, mob.player)&&
+                Objects.equals(nickname, mob.nickname)&&
+                Objects.equals(family, mob.family)&&
+                Objects.equals(title, mob.title)&&
+                Objects.equals(xpToUp, mob.xpToUp);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, level,health,vigor,focus,cursedEnergy,experience,type,nickname,family,title);
+        return Objects.hash(id, name, level,health,vigor,focus,cursedEnergy,experience,type,nickname,family,title,xpToUp);
     }
 
     @Override
@@ -98,24 +116,25 @@ public class Mob {
     }
 
     public void levelUp(){
-        this.level++;
-        this.health++;
-        this.vigor++;
-        this.focus++;
-        this.cursedEnergy++;
-        this.experience=0;
+        GenerateNewAttribute();
 
         if(this.level==5){
             this.nickname=" O Apelido";
             this.name+=this.nickname;
         }
     }
+    public void GenerateNewAttribute(){
+        int baseValue = 150;
+        Random random = new Random();
+        while(this.experience>=this.xpToUp) {
+            this.health = health + random.nextInt(3);
+            this.vigor = vigor + random.nextInt(3);
+            this.focus = focus + random.nextInt(3);
+            this.cursedEnergy = cursedEnergy + random.nextInt(3);
+            this.xpToUp = (baseValue * level) + xpToUp;
+            this.level++;
+        }
+    }
 
-//    public String profile(){
-//        return String.format("{name:%s,level:%d,type:%s,family:%s,title:%s,health:%d,vigor:%d,focus:%d,cursedEnergy:%d,experience:%d}",
-//                this.name,this.level,this.type,
-//                this.family,this.title,this.health,
-//                this.vigor,this.focus,this.cursedEnergy,this.experience);
-//    }
 
 }
